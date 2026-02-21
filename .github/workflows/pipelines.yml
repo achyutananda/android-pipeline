@@ -45,6 +45,8 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     needs: test
+    outputs:
+      version: ${{steps.set_version.output.version}}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -59,9 +61,11 @@ jobs:
       - name: Build
         run: ./gradlew assembleDebug --stacktrace
       - name: Rename Debug APK with build number
+        id: set_version
         run: |
           VERSION=$(./gradlew -q printVersionName)
           echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "version=$VERSION" >> $GITHUB_OUTPUT   # expose as job output
           mv app/build/outputs/apk/debug/app-debug.apk \
              app/build/outputs/apk/debug/app-debug-${VERSION}-${{ github.run_number }}.apk
       - name: Upload Debug APK Artifact
@@ -78,7 +82,7 @@ jobs:
       - name: Upload to Firebase
         uses: actions/download-artifact@v4
         with:
-          name: debug-apk-${{env.VERSION}}-${{github.run_number}}
+          name: debug-apk-${{needs.build.outputs.version}}-${{github.run_number}}
           path: apk/
       - name: Uploading
         run: |
