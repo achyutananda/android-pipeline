@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 env:
   JAVA_VERSION: 17
   ANDROID_COMPILE_SDK_VERSION: 34
