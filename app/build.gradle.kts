@@ -40,6 +40,11 @@ android {
         compose = true
     }
 }
+tasks.register("printVersionName") {
+    doLast {
+        println(android.defaultConfig.versionName)
+    }
+}
 
 dependencies {
     implementation(libs.androidx.core.ktx)
