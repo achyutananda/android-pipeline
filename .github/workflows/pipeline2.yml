@@ -61,4 +61,8 @@ jobs:
         with:
           name: app-debug
           path: apk/
+      - name: Output contents
+        run: |
+          ls
+          echo 'files from downloaded job'
           
