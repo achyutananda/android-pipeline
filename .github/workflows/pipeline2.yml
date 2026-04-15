@@ -57,7 +57,7 @@ jobs:
           path: app/build/outputs/apk/debug/app-debug.apk
       - name: output share
         id: publish
-        run: output1 = "some value" >> $GITHUB_OUTPUT
+        run: echo "output1 = some value" >> $GITHUB_OUTPUT
   publish:
     runs-on: ubuntu-latest
     needs: build
