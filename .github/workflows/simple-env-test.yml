@@ -1,0 +1,28 @@
+name: Env test
+on: workflow_dispatch
+env:
+  ENV_KEY: KEY1
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print global
+        run: |
+          echo "From global: ${{env.ENV_KEY}}" 
+  job2:
+    env:
+      ENV_KEY: KEY1-job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print global
+        run: |
+          echo "From job: ${{env.ENV_KEY}}"
+  job3:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print global
+        env:
+          ENV_KEY: KEY1-step
+        run: |
+          echo "From step: ${{env.ENV_KEY}}"
+      
